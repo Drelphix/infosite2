@@ -12,9 +12,10 @@ public class IpAddress {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @Column
+    @Column(nullable = false, length = 16)
     private String ip;
 
     @ManyToOne(targetEntity = NetworkAdapter.class)

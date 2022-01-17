@@ -12,21 +12,22 @@ public class Memory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String capacity;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 10)
     private short speed;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String serialNumber;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String manufacturer;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 25)
     private String location;
 
     @ManyToOne(targetEntity = Computer.class)

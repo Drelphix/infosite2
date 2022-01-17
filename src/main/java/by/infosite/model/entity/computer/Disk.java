@@ -12,18 +12,19 @@ public class Disk {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String model;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String serialNumber;
 
     @Column(nullable = false)
     private String size;
 
-    @Column
+    @Column(length = 8)
     private String status;
 
     @ManyToOne(targetEntity = Computer.class)

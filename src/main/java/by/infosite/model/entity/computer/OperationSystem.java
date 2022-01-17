@@ -11,15 +11,16 @@ import javax.persistence.*;
 public class OperationSystem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 40)
     private String caption;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String version;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 5)
     private String architecture;
 
     @OneToOne(targetEntity = Computer.class)

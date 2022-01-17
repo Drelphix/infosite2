@@ -1,31 +1,33 @@
 package by.infosite.model.entity.computer;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
-@Table(name = "Computer")
+@Getter
+@Setter
 public class Computer {
 
     @Id
-    @Column
+    @Column(nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id ;
 
     @Column
     private boolean deleted;
 
-    @Column(unique = true,nullable = false)
+    @Column(unique = true,nullable = false,length = 15)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
+    private String domain;
+
+    @Column(nullable = false, length = 30)
     private String motherboard;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 15)
     private String cpu;
 
     @OneToOne(targetEntity = OperationSystem.class, mappedBy = "computer",cascade = CascadeType.ALL)
