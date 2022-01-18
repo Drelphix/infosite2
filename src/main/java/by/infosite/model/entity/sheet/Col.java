@@ -13,17 +13,20 @@ public class Col {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @javax.persistence.Column(nullable = false)
+    @Column(nullable = false)
     private long rowId;
 
-    @javax.persistence.Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 30)
     private String name;
 
-    @javax.persistence.Column(nullable = false)
+    @Column(nullable = false)
+    private ColType colType;
+
+    @Column(nullable = false)
     private short position;
 
-    @javax.persistence.Column
-    private boolean deleted;
+    @Column
+    private boolean isDeleted;
 
     @ManyToOne(targetEntity = Sheet.class)
     private Sheet sheet;

@@ -23,7 +23,7 @@ public class Cell {
     private short position;
 
     @Column
-    private boolean deleted;
+    private boolean isDeleted;
 
     @ManyToOne(targetEntity = Col.class)
     private Col col;

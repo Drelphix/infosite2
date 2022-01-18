@@ -24,7 +24,7 @@ public class Menu {
     private short position;
 
     @Column
-    private boolean deleted;
+    private boolean isDeleted;
 
     @OneToMany(targetEntity = SubMenu.class, mappedBy = "menu")
     private List<SubMenu> subMenuList;

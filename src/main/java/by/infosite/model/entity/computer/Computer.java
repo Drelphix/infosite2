@@ -17,9 +17,9 @@ public class Computer {
     private long id ;
 
     @Column
-    private boolean deleted;
+    private boolean isDeleted;
 
-    @Column(unique = true,nullable = false,length = 15)
+    @Column(nullable = false,length = 15)
     private String name;
 
     @Column(nullable = false, length = 20)

@@ -24,7 +24,7 @@ public class SubMenu {
     private short position;
 
     @Column
-    private boolean deleted;
+    private boolean isDeleted;
 
     @OneToMany(targetEntity = Sheet.class, mappedBy = "subMenu")
     private List<Sheet> sheetList;
