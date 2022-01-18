@@ -5,7 +5,7 @@ import by.infosite.model.service.computer.ComputerService;
 
 import java.util.List;
 
-public class ComputerServiceImpl implements ComputerService {
+public class ComputerServiceImpl implements ComputerService { //todo
 
     @Override
     public Computer addComputer(Computer computer) {

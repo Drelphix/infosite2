@@ -6,8 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Setter
+@Table
 @Getter
+@Setter
 public class Disk {
 
     @Id
