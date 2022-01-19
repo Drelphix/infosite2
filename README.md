@@ -7,7 +7,7 @@ It can be used to store data in the format of tables,
 information about the technical component of computers,
 instructions for system administrators,
 information about the IP addresses used.<br>
-Technologies used:<br>
-MySQL database, Spring boot, Spring JPA, Spring Security, Spring Web, XML, Docker (plugin);<br>
+Technologies:<br>
+MySQL, Spring boot, Spring JPA, Spring Security, Spring Web, XML, Docker (plugin), Gradle;<br>
 Languages:<br>
 SQL, Java, HTML, CSS, JavaScript, Thymeleaf.
