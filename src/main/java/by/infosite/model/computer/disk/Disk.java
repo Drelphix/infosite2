@@ -19,7 +19,7 @@ public class Disk {
     @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(nullable = false, length = 80)
     private String model;
 
     @Column(nullable = false, length = 30)
@@ -31,7 +31,7 @@ public class Disk {
     @Column(length = 8)
     private String status;
 
-    @ManyToOne(targetEntity = Computer.class)
+    @ManyToOne(targetEntity = Computer.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "computer_id", nullable = false)
     private Computer computer;
 
@@ -75,5 +75,34 @@ public class Disk {
                 ", size='" + size + '\'' +
                 ", status='" + status + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Disk)) return false;
+
+        Disk disk = (Disk) object;
+
+        if (getId() == disk.getId()) return true;
+        if (!getModel().equals(disk.getModel())) return false;
+        if (!getSerialNumber().equals(disk.getSerialNumber())) return false;
+        if (!getSize().equals(disk.getSize())) return false;
+        return getStatus().equals(disk.getStatus());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getModel().hashCode();
+        result = 31 * result + getSerialNumber().hashCode();
+        result = 31 * result + getSize().hashCode();
+        result = 31 * result + getStatus().hashCode();
+        result = 31 * result + getComputer().hashCode();
+        return result;
+    }
+
+    public void changeId(Disk disk){
+        this.id = disk.getId();
     }
 }

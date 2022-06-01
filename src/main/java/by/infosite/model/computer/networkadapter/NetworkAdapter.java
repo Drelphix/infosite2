@@ -22,7 +22,7 @@ public class NetworkAdapter {
     @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 100)
     private String description;
 
     @OneToMany(targetEntity = IpAddress.class, mappedBy = "networkAdapter", cascade = CascadeType.ALL)
@@ -31,11 +31,11 @@ public class NetworkAdapter {
     @Column(nullable = false, length = 20)
     private String macAddress;
 
-    @ManyToOne(targetEntity = Computer.class)
+    @ManyToOne(targetEntity = Computer.class , cascade = CascadeType.ALL)
     @JoinColumn(name = "computer_id")
     private Computer computer;
 
-    private void addIpAddress(IpAddress ipAddress){
+    public void addIpAddress(IpAddress ipAddress){
         if(ipAddressList==null){
             ipAddressList = new ArrayList<>();
         }
@@ -59,6 +59,7 @@ public class NetworkAdapter {
             return this;
         }
 
+
         public NetworkAdapterBuilder addIpAddress(IpAddress address){
             networkAdapter.addIpAddress(address);
             return this;
@@ -81,5 +82,36 @@ public class NetworkAdapter {
                 ", ipAddressList=" + ipAddressList +
                 ", macAddress='" + macAddress + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof NetworkAdapter)) return false;
+
+        NetworkAdapter that = (NetworkAdapter) object;
+
+        if (getId() == that.getId()) return true;
+        if (!getDescription().equals(that.getDescription())) return false;
+        if (!getIpAddressList().equals(that.getIpAddressList())) return false;
+        return getMacAddress().equals(that.getMacAddress());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getDescription().hashCode();
+        result = 31 * result + getIpAddressList().hashCode();
+        result = 31 * result + getMacAddress().hashCode();
+        result = 31 * result + getComputer().hashCode();
+        return result;
+    }
+
+    public void changeId(NetworkAdapter networkAdapter){
+        this.id = networkAdapter.getId();
+        for (int i = 0; i < this.getIpAddressList().size(); i++) {
+            IpAddress ipAddress = networkAdapter.getIpAddressList().get(i);
+            this.ipAddressList.get(i).changeId(ipAddress);
+        }
     }
 }

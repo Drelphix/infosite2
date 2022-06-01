@@ -25,16 +25,16 @@ public class Computer {
     @Column
     private boolean isDeleted;
 
-    @Column(nullable = false,length = 15)
+    @Column(nullable = false,length = 15, unique = true)
     private String name;
 
-    @Column(nullable = false, length = 20)
+    @Column(length = 20)
     private String domain;
 
     @Column(nullable = false, length = 30)
     private String motherboard;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 60)
     private String cpu;
 
     @OneToOne(targetEntity = OperationSystem.class, mappedBy = "computer",cascade = CascadeType.ALL)
@@ -49,21 +49,21 @@ public class Computer {
     @OneToMany(targetEntity = NetworkAdapter.class, mappedBy = "computer", cascade = CascadeType.ALL)
     private List<NetworkAdapter> networkAdapterList;
 
-    private void addDisk(Disk disk){
+    public void addDisk(Disk disk){
         if(diskList == null){
             diskList = new ArrayList<>();
         }
         diskList.add(disk);
     }
 
-    private void addRAM(Ram RAM){
+    public void addRAM(Ram RAM){
         if(RamList == null){
             RamList = new ArrayList<>();
         }
         RamList.add(RAM);
     }
 
-    private void addNetworkAdapter(NetworkAdapter networkAdapter){
+    public void addNetworkAdapter(NetworkAdapter networkAdapter){
         if(networkAdapterList == null){
             networkAdapterList = new ArrayList<>();
         }
@@ -151,5 +151,54 @@ public class Computer {
                 ", memoryList=" + RamList +
                 ", networkAdapterList=" + networkAdapterList +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Computer)) return false;
+
+        Computer computer = (Computer) object;
+
+        if (getId() == computer.getId()) return true;
+        if (!getName().equals(computer.getName())) return false;
+        if (getDomain() != null ? !getDomain().equals(computer.getDomain()) : computer.getDomain() != null)
+            return false;
+        if (!getMotherboard().equals(computer.getMotherboard())) return false;
+        if (!getCpu().equals(computer.getCpu())) return false;
+        if (!getOperationSystem().equals(computer.getOperationSystem())) return false;
+        if(!getDiskList().equals(computer.getDiskList())) return false;
+        if(!getRamList().equals(computer.getRamList())) return false;
+        return getNetworkAdapterList().equals(computer.getNetworkAdapterList());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = name.hashCode();
+        result = 31 * result + (domain != null ? domain.hashCode() : 0);
+        result = 31 * result + motherboard.hashCode();
+        result = 31 * result + cpu.hashCode();
+        result = 31 * result + operationSystem.hashCode();
+        result = 31 * result + diskList.hashCode();
+        result = 31 * result + RamList.hashCode();
+        result = 31 * result + networkAdapterList.hashCode();
+        return result;
+    }
+
+    public void changeId(Computer computer){
+        this.setId(computer.getId());
+        this.operationSystem.changeId(computer.operationSystem);
+        for (int i = 0; i < this.diskList.size(); i++) {
+            Disk disk = computer.diskList.get(i);
+            this.diskList.get(i).changeId(disk);
+        }
+        for (int i = 0; i < this.networkAdapterList.size(); i++) {
+            NetworkAdapter networkAdapter = computer.networkAdapterList.get(i);
+            this.networkAdapterList.get(i).changeId(networkAdapter);
+        }
+        for (int i = 0; i < this.RamList.size(); i++) {
+            Ram ram = computer.getRamList().get(i);
+            this.RamList.get(i).changeId(ram);
+        }
     }
 }

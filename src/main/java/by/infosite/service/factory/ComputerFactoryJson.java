@@ -1,7 +1,5 @@
 package by.infosite.service.factory;
 
-import by.infosite.exception.ComputerFactoryException;
-import by.infosite.exception.ExceptionMessage;
 import by.infosite.model.computer.Computer;
 import by.infosite.model.computer.ComputerJsonField;
 import by.infosite.model.computer.disk.Disk;
@@ -20,34 +18,38 @@ public class ComputerFactoryJson implements ComputerFactory {
     private static final String COMMA = ",";
 
     @Override
-    public Computer getComputer(HashMap<String, Object> computerJson) throws ComputerFactoryException {
-        var computerBuilder = new Computer.ComputerBuilder();
-        for (Map.Entry<String, Object> json : computerJson.entrySet()) {
+    public Computer getComputer(HashMap<String, Object> computerMap){
+        Computer computer = new Computer();
+        for (Map.Entry<String, Object> json : computerMap.entrySet()) {
             if (json.getKey().equals(ComputerJsonField.COMPUTER_JSON_PARAM)) {
-                Map<String, Object> computerMap = getGenericParameter(json.getValue());
-                for (Map.Entry<String, Object> param : computerMap.entrySet()) {
+                Map<String, Object> pc = getGenericParameter(json.getValue());
+                for (Map.Entry<String, Object> param : pc.entrySet()) {
                     Object value = param.getValue();
                     String key = param.getKey();
                     switch (key) {
                         case ComputerJsonField.COMPUTER_NAME -> {
-                            computerBuilder.withName(getStringParameter(value));
+                            computer.setName(getStringParameter(value));
                         }
                         case ComputerJsonField.COMPUTER_OS -> {
                             Map<String, Object> osMap = getGenericParameter(value);
-                            computerBuilder.withOperationSystem(getOS(osMap));
+                            OperationSystem operationSystem = getOS(osMap);
+                            operationSystem.setComputer(computer);
+                            computer.setOperationSystem(operationSystem);
                         }
                         case ComputerJsonField.COMPUTER_MOTHERBOARD -> {
-                            computerBuilder.withMotherboard(getStringParameter(value));
+                            computer.setMotherboard(getStringParameter(value));
                         }
                         case ComputerJsonField.COMPUTER_CPU -> {
-                            computerBuilder.withCpu(getStringParameter(value));
+                            computer.setCpu(getStringParameter(value));
                         }
                         case ComputerJsonField.COMPUTER_DISKS -> {
                             ArrayList arrayList = getGenericParameter(value);
+
                             for (int i = 0; i < arrayList.size(); i++) {
                                 Map<String, Object> diskMap = getGenericParameter(arrayList.get(i));
                                 Disk disk = getDisk(diskMap);
-                                computerBuilder.addDisk(disk);
+                                disk.setComputer(computer);
+                                computer.addDisk(disk);
                             }
 
                         }
@@ -56,7 +58,8 @@ public class ComputerFactoryJson implements ComputerFactory {
                             for (int i = 0; i < arrayList.size(); i++) {
                                 Map<String, Object> networkMap = getGenericParameter(arrayList.get(i));
                                 NetworkAdapter networkAdapter = getNetworkAdapter(networkMap);
-                                computerBuilder.addNetworkAdapter(networkAdapter);
+                                networkAdapter.setComputer(computer);
+                                computer.addNetworkAdapter(networkAdapter);
                             }
                         }
                         case ComputerJsonField.COMPUTER_RAM -> {
@@ -64,18 +67,15 @@ public class ComputerFactoryJson implements ComputerFactory {
                             for (int i = 0; i < arrayList.size(); i++) {
                                 Map<String, Object> ramMap = getGenericParameter((arrayList.get(i)));
                                 Ram ram = getRAM(ramMap);
-                                computerBuilder.addRAM(ram);
+                                ram.setComputer(computer);
+                                computer.addRAM(ram);
                             }
-                        }
-
-                        default -> {
-                            throw new ComputerFactoryException(ExceptionMessage.COMPUTER_FACTORY_PARSE_EXCEPTION + key);
                         }
                     }
                 }
             }
         }
-        return computerBuilder.build();
+        return computer;
     }
 
     private OperationSystem getOS(Map<String, Object> osMap) {
@@ -116,7 +116,6 @@ public class ComputerFactoryJson implements ComputerFactory {
                 case ComputerJsonField.MEMORY_SPEED -> {
                     memoryBuilder.withSpeed(getShortParameter(value));
                 }
-
             }
         }
         return memoryBuilder.build();
@@ -147,27 +146,29 @@ public class ComputerFactoryJson implements ComputerFactory {
 
     private NetworkAdapter getNetworkAdapter(Map<String, Object> networkMap) {
         var networkAdapterBuilder = new NetworkAdapter.NetworkAdapterBuilder();
+        NetworkAdapter networkAdapter = new NetworkAdapter();
         for (Map.Entry<String, Object> network : networkMap.entrySet()) {
             Object value = network.getValue();
             String key = network.getKey();
             switch (key) {
                 case ComputerJsonField.NETWORK_ADAPTER_DESCRIPTION -> {
-                    networkAdapterBuilder.withDescription(getStringParameter(value));
+                    networkAdapter.setDescription(getStringParameter(value));
                 }
                 case ComputerJsonField.NETWORK_ADAPTER_MAC_ADDRESS -> {
-                    networkAdapterBuilder.withMacAddress(getStringParameter(value));
+                    networkAdapter.setMacAddress(getStringParameter(value));
                 }
                 case ComputerJsonField.NETWORK_ADAPTER_IP_ADDRESSES -> {
                     String[] ipList = getStringParameter(value).split(COMMA);
                     for (String ip : ipList) {
                         IpAddress ipAddress = new IpAddress();
                         ipAddress.setIp(ip);
-                        networkAdapterBuilder.addIpAddress(ipAddress);
+                        ipAddress.setNetworkAdapter(networkAdapter);
+                        networkAdapter.addIpAddress(ipAddress);
                     }
                 }
             }
         }
-        return networkAdapterBuilder.build();
+        return networkAdapter;
     }
 
     private <T> T getGenericParameter(Object object) {

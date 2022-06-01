@@ -18,16 +18,16 @@ public class OperationSystem {
     @Column(nullable = false)
     private long id;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 80)
     private String caption;
 
     @Column(nullable = false, length = 30)
     private String version;
 
-    @Column(nullable = false, length = 5)
+    @Column(nullable = false, length = 20)
     private String architecture;
 
-    @OneToOne(targetEntity = Computer.class)
+    @OneToOne(targetEntity = Computer.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "computer_id")
     private Computer computer;
 
@@ -65,5 +65,32 @@ public class OperationSystem {
                 ", version='" + version + '\'' +
                 ", architecture='" + architecture + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof OperationSystem)) return false;
+
+        OperationSystem that = (OperationSystem) object;
+
+        if (getId() == that.getId()) return true;
+        if (!getCaption().equals(that.getCaption())) return false;
+        if (!getVersion().equals(that.getVersion())) return false;
+        return getArchitecture().equals(that.getArchitecture());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getCaption().hashCode();
+        result = 31 * result + getVersion().hashCode();
+        result = 31 * result + getArchitecture().hashCode();
+        result = 31 * result + getComputer().hashCode();
+        return result;
+    }
+
+    public void changeId(OperationSystem operationSystem){
+        this.id = operationSystem.getId();
     }
 }

@@ -25,10 +25,10 @@ public class Ram {
     @Column(nullable = false, length = 10)
     private short speed;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String serialNumber;
 
-    @Column(nullable = false, length = 30)
+    @Column(length = 30)
     private String manufacturer;
 
     @Column(nullable = false, length = 25)
@@ -91,5 +91,39 @@ public class Ram {
                 ", location='" + location + '\'' +
                 ", bankLabel='" + bankLabel + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) return true;
+        if (!(object instanceof Ram)) return false;
+
+        Ram ram = (Ram) object;
+
+        if (getId() == ram.getId()) return true;
+        if (getSpeed() != ram.getSpeed()) return false;
+        if (!getCapacity().equals(ram.getCapacity())) return false;
+        if (getSerialNumber() != null ? !getSerialNumber().equals(ram.getSerialNumber()) : ram.getSerialNumber() != null)
+            return false;
+        if (getManufacturer() != null ? !getManufacturer().equals(ram.getManufacturer()) : ram.getManufacturer() != null)
+            return false;
+        if (!getLocation().equals(ram.getLocation())) return false;
+        return getBankLabel().equals(ram.getBankLabel());
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + getCapacity().hashCode();
+        result = 31 * result + (int) getSpeed();
+        result = 31 * result + (getSerialNumber() != null ? getSerialNumber().hashCode() : 0);
+        result = 31 * result + (getManufacturer() != null ? getManufacturer().hashCode() : 0);
+        result = 31 * result + getLocation().hashCode();
+        result = 31 * result + getBankLabel().hashCode();
+        result = 31 * result + getComputer().hashCode();
+        return result;
+    }
+    public void changeId(Ram ram){
+        this.id = ram.getId();
     }
 }
