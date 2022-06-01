@@ -1,6 +1,6 @@
 package by.infosite.model.computer.operationsystem;
 
-import by.infosite.model.computer.computer.Computer;
+import by.infosite.model.computer.Computer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -30,4 +30,40 @@ public class OperationSystem {
     @OneToOne(targetEntity = Computer.class)
     @JoinColumn(name = "computer_id")
     private Computer computer;
+
+    public static class OSBuilder{
+        OperationSystem newOS;
+
+        public OSBuilder(){
+            newOS = new OperationSystem();
+        }
+
+        public OSBuilder withCaption(String caption){
+            newOS.setCaption(caption);
+            return this;
+        }
+
+        public OSBuilder withVersion(String version){
+            newOS.setVersion(version);
+            return this;
+        }
+
+        public OSBuilder withArchitecture(String architecture){
+            newOS.setArchitecture(architecture);
+            return this;
+        }
+
+        public OperationSystem build(){
+            return newOS;
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "OperationSystem{" +
+                "caption='" + caption + '\'' +
+                ", version='" + version + '\'' +
+                ", architecture='" + architecture + '\'' +
+                '}';
+    }
 }

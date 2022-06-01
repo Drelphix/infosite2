@@ -38,7 +38,7 @@ public class User {
     @Column
     private boolean isDeleted;
 
-    @Column
+    @OneToOne(targetEntity = Role.class)
     private Role role;
 
     @OneToMany(targetEntity = Instruction.class, fetch = FetchType.LAZY,mappedBy = "user")

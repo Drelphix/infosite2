@@ -26,4 +26,11 @@ public class IpAddress {
     @JoinColumn(name = "network_adapter_id")
     private NetworkAdapter networkAdapter;
 
+
+    @Override
+    public String toString() {
+        return "IpAddress{" +
+                "ip='" + ip + '\'' +
+                '}';
+    }
 }

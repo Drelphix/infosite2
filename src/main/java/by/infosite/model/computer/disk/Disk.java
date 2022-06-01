@@ -1,6 +1,6 @@
 package by.infosite.model.computer.disk;
 
-import by.infosite.model.computer.computer.Computer;
+import by.infosite.model.computer.Computer;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,4 +35,45 @@ public class Disk {
     @JoinColumn(name = "computer_id", nullable = false)
     private Computer computer;
 
+
+    public static class DiskBuilder{
+        private Disk disk;
+
+        public DiskBuilder(){
+            disk = new Disk();
+        }
+
+        public DiskBuilder withModel(String model){
+            disk.setModel(model);
+            return this;
+        }
+
+        public DiskBuilder withSerialNumber(String serialNumber){
+            disk.setSerialNumber(serialNumber);
+            return this;
+        }
+
+        public DiskBuilder withSize(String size){
+            disk.setSize(size);
+            return this;
+        }
+
+        public DiskBuilder withStatus(String status){
+            disk.setStatus(status);
+            return this;
+        }
+
+        public Disk build(){
+            return disk;
+        }
+    }
+    @Override
+    public String toString() {
+        return "Disk{" +
+                "model='" + model + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", size='" + size + '\'' +
+                ", status='" + status + '\'' +
+                '}';
+    }
 }

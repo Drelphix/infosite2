@@ -1,0 +1,106 @@
+/* bengali */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/hindsiliguri/v12/ijwTs5juQtsyLLR5jN4cxBEoTI7ax9k0.woff2) format('woff2');
+  unicode-range: U+0964-0965, U+0981-09FB, U+200C-200D, U+20B9, U+25CC;
+}
+/* latin-ext */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/hindsiliguri/v12/ijwTs5juQtsyLLR5jN4cxBEoTJLax9k0.woff2) format('woff2');
+  unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: 'Hind Siliguri';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://fonts.gstatic.com/s/hindsiliguri/v12/ijwTs5juQtsyLLR5jN4cxBEoTJzaxw.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+body{
+    background-image: url("https://preview.ibb.co/mUeDFe/dmw.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: 'Hind Siliguri', sans-serif;
+}
+h2{
+    text-align: center;
+    margin-top: 20px;
+    color: white;
+}
+.main{
+    height: 600px;
+    width: 100%;
+    margin-top: 10%;
+}
+.left{
+    height: 500px;
+    width: 400px;
+    float: center;
+    margin: 80px 0px 0px 210px;
+    background-color: black;
+    opacity: 0.7;
+    color: yellow;
+}
+.left h2{
+    color: darkturquoise;
+    margin-left: 40px;
+    text-align: left;
+}
+form input{
+    height: 35px;
+    width: 300px;
+    padding-left: 3px;
+    background-color: white;
+    margin: 5px 0px 5px 40px;
+}
+p{
+    margin-top: 5px;
+    margin-left: 40px;
+}
+.left2{
+    margin-top: -8px;
+}
+
+.bottom input{
+    margin-left: 40px;
+}
+button{
+    height: 40px;
+    width: 350px;
+    background-color: #ff8d00;
+    border: none;
+    margin: 20px 0px 25px 25px;
+}
+button a{
+    text-decoration: none;
+    color: white;
+}
+h4{
+    text-align: center;
+    margin-top: 13px;
+}
+.login{
+    width: 400px;
+    float: center;
+    margin: auto;
+    background-color: black;
+    opacity: 0.7;
+}
+.login h2{
+    color: darkturquoise;
+    text-align: center;
+}
+.last{
+    margin-left: 40px;
+    color: yellow;
+}
+footer p{
+    text-align: center;
+    color: white;
+}

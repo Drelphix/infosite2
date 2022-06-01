@@ -1,6 +1,7 @@
 package by.infosite.model.authorization.access;
 
 
+import by.infosite.model.authorization.role.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 enum AccessType{
-    READ, WRITE, DENY
+    READ, WRITE, DENY, ALL
 }
 
 enum AccessPart{
@@ -37,4 +38,7 @@ public class Access {
 
     @Column(nullable = false, length = 30)
     private String name;
+
+    @ManyToOne(targetEntity = Role.class)
+    private Role role;
 }

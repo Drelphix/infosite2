@@ -24,7 +24,7 @@ public class Instruction {
     @Column(nullable = false, length = 30)
     private String title;
 
-    @Column(nullable = false, length = 65535)
+    @Column(nullable = false, columnDefinition="TEXT")
     private String text;
 
     @Column(nullable = false)

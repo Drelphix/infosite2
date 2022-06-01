@@ -1,0 +1,21 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link href="/css/authorization.css" rel="stylesheet">
+</head>
+
+<body>
+<div th:insert="language::locale"></div>
+<div class="main">
+    <div class="login">
+        <h2 th:text="#{authorization.login-form}"></h2>
+        <form>
+            <input type="text" name="email" th:placeholder="#{authorization.username}">
+            <input type="password" name="pw" th:placeholder="#{authorization.password}">
+        </form>
+        <button> <a href="#" th:text="#{authorization.login}"></a></button>
+    </div>
+</div>
+</body>
+
+</html>

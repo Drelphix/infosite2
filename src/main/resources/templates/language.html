@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="locale">
+    <script src="/scripts/jquery_3.1.1.js"></script>
+<script src="/scripts/language.js"></script>
+<link href="/css/language.css" rel="stylesheet">
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("#locales").change(function () {
+        let question = '?';
+        let location = new String(window.location);
+            var selectedOption = $('#locales').val();
+            if (selectedOption != ''){
+                window.location.replace(location.split(question)[0]+'?lang=' + selectedOption);
+            }
+        });
+    });
+</script>
+<div>
+    <span th:text="#{language.change}"></span>:
+    <select id="locales" class="language" data-menu>
+        <option value=""></option>
+        <option value="ru" th:text="#{language.ru}"></option>
+        <option value="en" th:text="#{language.en}"></option>
+    </select>
+</div>
+</div>
+</body>
+</html>

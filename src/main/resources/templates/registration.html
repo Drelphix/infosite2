@@ -1,0 +1,24 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Login</title>
+    <link href="/css/authorization.css" rel="stylesheet">
+</head>
+
+<div th:insert="language::locale"></div>
+<div class="left">
+    <h2> Register Form :</h2>
+
+    <form>
+        <input type="name" name="name" placeholder="Username">
+        <input type="email" name="email" placeholder="Email">
+        <p> Please enter a valid Email address</p>
+    </form>
+    <div class="left2">
+        <form>
+            <input type="password" name="pw" placeholder="Password"><br>
+            <p> Minimum of 6 characters</p>
+            <input type="password" name="confirm pw" placeholder="Confirm Password">
+        </form>
+    </div>
+    <button><a href="#" >SUBMIT</a></button>
+</div>
